@@ -3,6 +3,15 @@ import cors from 'cors';
 import express from 'express';
 import EnmelonPool from './enmelon-pool';
 
+// handle process exit
+
+process.on('SIGINT', function() {
+    console.log('deinitializating all instances...');
+    EnmelonPool.deinitAllInstances();
+    console.log('all instances deinitialized');
+    process.exit();
+});
+
 // api router
 let apiRouter = express.Router();
 

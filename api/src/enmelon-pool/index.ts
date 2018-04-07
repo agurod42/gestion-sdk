@@ -8,6 +8,12 @@ export default class EnmelonPool {
     private static instancesTokens: any = {};
     private static instancesTokenReviver: any = {};
 
+    static async deinitAllInstances() {
+        for (var i in this.instances) {
+            await this.instances[i].deinit();
+        }
+    }
+
     static async instance(id: any): Promise<Enmelon> {
         if (!id) throw Error('instance id cannot be empty');
 
