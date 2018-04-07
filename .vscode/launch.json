@@ -8,9 +8,9 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/dist/index.js",
+            "program": "${workspaceFolder}/api/dist/index.js",
             "outFiles": [
-                "${workspaceFolder}/dist/**/*.js.map"
+                "${workspaceFolder}/api/dist/**/*.js.map"
             ]
         }
     ]
