@@ -31,7 +31,7 @@ apiRouter.get('/careers', async (req, res) => {
 });
 
 // webapp router
-let webappRouter = express.Router();
+let webappRouter = express.static(__dirname + '/../../webapp/build');
 
 // app definition
 const app = express();
