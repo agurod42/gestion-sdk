@@ -3,24 +3,19 @@ import Header from '../Header';
 
 import GestionEnmelon from '../../services/GestionEnmelon';
 
-export default class CareerSubjectsGraph extends React.Component {
+export default class Login extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
             loading: true,
-            graphNodes: [],
-            graphEdges: [] 
         };
     }
 
     componentWillMount() {
-        GestionEnmelon.careerSubjectsGraph(2001).then(res => {
-            this.setState({
-                graphNodes: res.nodes,
-                graphEdges: res.edges
-            })
+        GestionEnmelon.login('194412', 'F3d320102').then(res => {
+            console.log(res)
         })
     }
 

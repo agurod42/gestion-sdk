@@ -10,7 +10,7 @@ export default class GestionORT implements Gestion {
     private browser: puppeteer.Browser;
     private page: puppeteer.Page;
     private pageConsoleLogHandled: Boolean = false;
-    private sessionToken: String = '';
+    private sessionToken: string = '';
 
     async init() {
         console.log('init');
@@ -24,11 +24,11 @@ export default class GestionORT implements Gestion {
         await this.browser.close();
     }
 
-    async login(username: String, password: String) {
+    async login(username: string, password: string): Promise<string> {
         console.log('trying to login...');
         await this.page.goto('https://gestion.ort.edu.uy/general/vistas/login.html');
-        await this.page.type('#codigo_de_persona', '194412');
-        await this.page.type('#contraseña_persona', 'F3d320102');
+        await this.page.type('#codigo_de_persona', username);
+        await this.page.type('#contraseña_persona', password);
         await this.page.click('#LoginButton');
         await this.page.waitForNavigation();
         console.log('login succeed');
@@ -36,6 +36,8 @@ export default class GestionORT implements Gestion {
         console.log('trying to get the session token...');
         this.sessionToken = await this.page.evaluate('sessionStorage.token');
         console.log('session token: ******');
+
+        return this.sessionToken;
     }
 
     async logout() {
@@ -51,12 +53,12 @@ export default class GestionORT implements Gestion {
         return JSON.parse(res).map((i: any) => convertObjectToCareer(i));
     }
 
-    async careerSubjects(careerId: String): Promise<Subject[]> {
+    async careerSubjects(careerId: string): Promise<Subject[]> {
         let res = await this._pageAjaxRequest('GET', `${GESTION_API_URL}/PerfilAcademico/MateriaDelTitulo?idTitulo=${careerId}`);
         return JSON.parse(res).map((i: any) => convertObjMateriaToSubject(i.ObjMateria));
     }
 
-    async subjectsRequirements(careerId: String, subjects: Subject[]): Promise<SubjectRequirement[]> {
+    async subjectsRequirements(careerId: string, subjects: Subject[]): Promise<SubjectRequirement[]> {
         let reqs: any[] = subjects.map(subject => ({ method: 'GET', url: `${GESTION_API_URL}/PerfilAcademico/MateriaDelTitulo/PreviasDeMateria?idTitulo=${careerId}&idMateria=${subject.id}` }))
         let res = await this._pageAjaxRequests(reqs);
 
@@ -87,7 +89,7 @@ export default class GestionORT implements Gestion {
         return Promise.resolve(subjectsRequirements);
     }
 
-    private async _pageAjaxRequest(method: String, url: String) {
+    private async _pageAjaxRequest(method: string, url: string) {
         let res = await this._pageAjaxRequests([{ method: method, url: url }]);
         return res[0];
     }
@@ -125,7 +127,7 @@ export default class GestionORT implements Gestion {
         return res;
     }
 
-    private _pageConsoleLog(enable: Boolean) {
+    private _pageConsoleLog(enable: boolean) {
         if (this.pageConsoleLogHandled) return;
 
         if (enable) {

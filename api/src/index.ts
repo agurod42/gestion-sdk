@@ -1,13 +1,47 @@
-import Enmelon from './enmelon';
-import GestionORT from './gestion/ort';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import express from 'express';
+import EnmelonPool from './enmelon-pool';
 
-Enmelon.with(new GestionORT(), async (gestionenmelon: Enmelon) => {
+// api router
+let apiRouter = express.Router();
 
-    await gestionenmelon.login('194412', 'F3d320102');
-    let careers = await gestionenmelon.careers();
-    let subjects = await gestionenmelon.careerSubjects(careers[0].id);
-    let subjectGraph = await gestionenmelon.careerSubjectsGraph(careers[0].id);
+apiRouter.post('/login', async (req, res) => {
+    try {
+        let enmelon = await EnmelonPool.instance(req.body.username);
+        let body = await enmelon.login(req.body.username, req.body.password);
+        res.send(body);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+    }
+});
 
-    console.log(subjectGraph);
+apiRouter.get('/careers', async (req, res) => {
+    try {
+        let enmelon = await EnmelonPool.authenticatedInstance(req.header('x-gestion-enmelon-token'));
+        let body = await enmelon.careers();
+        res.send(body);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+    }
+});
 
+// webapp router
+let webappRouter = express.Router();
+
+// app definition
+const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
+app.use('/api', apiRouter);
+app.use('/webapp', webappRouter);
+
+app.listen(process.env.PORT || 3004, function () {
+    console.log('gestion-enmelon ready to rock!');
 });

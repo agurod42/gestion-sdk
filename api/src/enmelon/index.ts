@@ -5,18 +5,20 @@ export default class Enmelon {
     
     private gestion: Gestion;
 
-    private constructor(gestion: Gestion) {
+    constructor(gestion: Gestion) {
         this.gestion = gestion;
     }
 
-    static async with(gestion: Gestion, fn: (enmelon: Enmelon) => any) {
-        await gestion.init();
-        await fn(new Enmelon(gestion));
-        await gestion.deinit();
+    async init() {
+        await this.gestion.init();
     }
     
-    async login(username: String, password: String) {
-        await this.gestion.login(username, password);
+    async deinit() {
+        await this.gestion.deinit();
+    }
+
+    async login(username: String, password: String): Promise<String> {
+        return await this.gestion.login(username, password);
     }
 
     async logout() {
