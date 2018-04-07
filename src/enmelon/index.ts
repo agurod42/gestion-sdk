@@ -31,20 +31,28 @@ export default class Enmelon {
         return await this.gestion.careerSubjects(careerId);
     }
 
-    async subjectRequirements(careerId: String, subjectId: String): Promise<SubjectRequirement> {
-        return await this.gestion.subjectRequirements(careerId, subjectId);
+    async careerSubjectsGraph(careerId: String): Promise<any> {
+        let subjects = await this.gestion.careerSubjects(careerId);
+        let subjectsRequirements = await this.gestion.subjectsRequirements(careerId, subjects);
+        let subjectsLinks: any[] = [];
+
+        for (var i in subjects) {
+            subjectsRequirements[i].total.forEach((subjectDependency) => {
+                subjectsLinks.push({
+                    from: subjectDependency.subject.id,
+                    to: subjects[i].id
+                });
+            });
+        }
+
+        return {
+            nodes: subjects,
+            edges: subjectsLinks
+        };
     }
 
-    async careerSubjectsGraph(careerId: String): Promise<any> {
-        /*
-        let subjects = await this.gestion.careerSubjects(careerId);
-        let subjectsGraph: any = { nodes: {}, edges: [] };
-
-        subjects.forEach(subject => {
-            subjectsGraph.nodes[subject.ObjMateria.IdMateria]
-        });
-
-        return Promise.resolve(subjectsTree);*/
+    async subjecstRequirements(careerId: String, subjects: Subject[]): Promise<SubjectRequirement[]> {
+        return await this.gestion.subjectsRequirements(careerId, subjects);
     }
 
     async careerDiagram() {

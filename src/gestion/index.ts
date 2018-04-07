@@ -8,6 +8,6 @@ export interface Gestion {
     logout(): void;
     careers(): Promise<Career[]>;
     careerSubjects(careerId: String): Promise<Subject[]>;
-    subjectRequirements(careerId: String, subjectId: String): Promise<SubjectRequirement>;
+    subjectsRequirements(careerId: String, subjects: Subject[]): Promise<SubjectRequirement[]>;
 
 }

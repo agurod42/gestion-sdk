@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import puppeteer, { ConsoleMessage } from 'puppeteer';
 import { Career, Subject, SubjectDependency, SubjectRequirement } from '../../enmelon/model';
 import { Gestion } from '../';
 import { convertObjMateriaToSubject, convertObjectToCareer } from './util';
@@ -9,6 +9,7 @@ export default class GestionORT implements Gestion {
     
     private browser: puppeteer.Browser;
     private page: puppeteer.Page;
+    private pageConsoleLogHandled: Boolean = false;
     private sessionToken: String = '';
 
     async init() {
@@ -55,42 +56,90 @@ export default class GestionORT implements Gestion {
         return JSON.parse(res).map((i: any) => convertObjMateriaToSubject(i.ObjMateria));
     }
 
-    async subjectRequirements(careerId: String, subjectId: String): Promise<SubjectRequirement> {
-        let res = await this._pageAjaxRequest('GET', `${GESTION_API_URL}/PerfilAcademico/MateriaDelTitulo/PreviasDeMateria?idTitulo=${careerId}&idMateria=${subjectId}`);
-        let subjectRequirements: any = new SubjectRequirement();
-        let subjectRequirementType: any = { 'P': 'partial', 'T': 'total' };
+    async subjectsRequirements(careerId: String, subjects: Subject[]): Promise<SubjectRequirement[]> {
+        let reqs: any[] = subjects.map(subject => ({ method: 'GET', url: `${GESTION_API_URL}/PerfilAcademico/MateriaDelTitulo/PreviasDeMateria?idTitulo=${careerId}&idMateria=${subject.id}` }))
+        let res = await this._pageAjaxRequests(reqs);
 
-        JSON.parse(res).forEach((partialRes: any) => {
-            partialRes.ColPreviasRequisito.forEach((colPreviasRequisito: any) => {
-                colPreviasRequisito.ObjRequisitoPreviaAlumno.ColMateriasRequisito.forEach((i: any) => {
-                    let subjectDependency = new SubjectDependency();
-                    subjectDependency.subject = convertObjMateriaToSubject(i.ObjMateria);
-                    subjectRequirements[subjectRequirementType[partialRes.TipoRequisito]].push(subjectDependency);
-                });
-            })
-        })
+        let subjectsRequirements: SubjectRequirement[] = [];
 
-        return Promise.resolve(subjectRequirements);
+        for (var i in res) {
+            let subjectRequirements = new SubjectRequirement();
+
+            JSON.parse(res[i]).forEach((partialRes: any) => {
+                partialRes.ColPreviasRequisito.forEach((colPreviasRequisito: any) => {
+                    colPreviasRequisito.ObjRequisitoPreviaAlumno.ColMateriasRequisito.forEach((i: any) => {
+                        let subjectDependency = new SubjectDependency();
+                        subjectDependency.subject = convertObjMateriaToSubject(i.ObjMateria);
+
+                        if (partialRes.TipoRequisito === 'P') {
+                            subjectRequirements.partial.push(subjectDependency);
+                        }
+                        else if (partialRes.TipoRequisito === 'T') {
+                            subjectRequirements.total.push(subjectDependency);
+                        }
+                    });
+                })
+            });
+
+            subjectsRequirements.push(subjectRequirements);
+        }
+
+        return Promise.resolve(subjectsRequirements);
     }
 
-    async _pageAjaxRequest(method: String, url: String) {
-        return await this.page.evaluate(
-            (method, url) => {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open(method, url, false);
-                xmlhttp.setRequestHeader('x-token', sessionStorage.token);
-                xmlhttp.send();
+    private async _pageAjaxRequest(method: String, url: String) {
+        let res = await this._pageAjaxRequests([{ method: method, url: url }]);
+        return res[0];
+    }
 
-                if (xmlhttp.status == 200) {
-                    return Promise.resolve(xmlhttp.responseText);
+    private async _pageAjaxRequests(reqs: any[]) {
+        this._pageConsoleLog(true);
+
+        let res = await this.page.evaluate(
+            (reqs) => {
+                let res = [];
+
+                for (var i in reqs) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open(reqs[i].method, reqs[i].url, false);
+                    xhr.setRequestHeader('x-token', sessionStorage.token);
+                    xhr.send();
+
+                    if (xhr.status == 200) {
+                        res.push(xhr.responseText);
+                    }
+                    else {
+                        res.push(new Error('err'));
+                    }
+
+                    console.log('req ' + i + ' completed');
                 }
-                else {
-                    return Promise.reject('err');
-                }
+                
+                return Promise.resolve(res);
             },
-            method, 
-            url
+            reqs
         );
+
+        this._pageConsoleLog(false);
+
+        return res;
+    }
+
+    private _pageConsoleLog(enable: Boolean) {
+        if (this.pageConsoleLogHandled) return;
+
+        if (enable) {
+            this.page.on('console', this._pageConsoleLogHandler);
+            this.pageConsoleLogHandled = true;
+        }
+        else {
+            this.page.removeListener('console', this._pageConsoleLogHandler)
+            this.pageConsoleLogHandled = false;
+        }
+    }
+
+    private _pageConsoleLogHandler(log: ConsoleMessage) {
+        console.log(log.text());
     }
 
 }
