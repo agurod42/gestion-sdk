@@ -1,0 +1,22 @@
+{
+  "name": "gestion-enmelon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/tsc",
+    "start": "./node_modules/.bin/nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/puppeteer": "^1.2.1",
+    "nodemon": "^1.17.3",
+    "ts-node": "^5.0.1",
+    "typescript": "^2.8.1"
+  }
+}
