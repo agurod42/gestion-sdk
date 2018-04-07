@@ -9,18 +9,18 @@ let apiRouter = express.Router();
 apiRouter.post('/login', async (req, res) => {
     try {
         let enmelon = await EnmelonPool.instance(req.body.username);
-        let body = await enmelon.login(req.body.username, req.body.password);
-        res.send(body);
+        let enmelonToken = EnmelonPool.instanceToken(req.body.username);
+        await enmelon.login(req.body.username, req.body.password);
+        res.send(enmelonToken);
     }
     catch (err) {
-        console.log(err);
         res.status(400).send(err);
     }
 });
 
 apiRouter.get('/careers', async (req, res) => {
     try {
-        let enmelon = await EnmelonPool.authenticatedInstance(req.header('x-gestion-enmelon-token'));
+        let enmelon = await EnmelonPool.instanceFromToken(req.header('x-gestion-enmelon-token'));
         let body = await enmelon.careers();
         res.send(body);
     }

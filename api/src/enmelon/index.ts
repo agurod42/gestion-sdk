@@ -17,8 +17,8 @@ export default class Enmelon {
         await this.gestion.deinit();
     }
 
-    async login(username: String, password: String): Promise<String> {
-        return await this.gestion.login(username, password);
+    async login(username: String, password: String) {
+        await this.gestion.login(username, password);
     }
 
     async logout() {

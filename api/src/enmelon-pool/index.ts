@@ -5,7 +5,8 @@ import GestionORT from '../gestion/ort';
 export default class EnmelonPool {
 
     private static instances: any = {};
-    private static instanceReviverToken: any = {};
+    private static instancesTokens: any = {};
+    private static instancesTokenReviver: any = {};
 
     static async instance(id: any): Promise<Enmelon> {
         if (!id) throw Error('instance id cannot be empty');
@@ -13,16 +14,23 @@ export default class EnmelonPool {
         if (!this.instances[id]) {
             this.instances[id] = new Enmelon(new GestionORT());
             await this.instances[id].init();
-            this.instanceReviverToken[crypto.randomBytes(16).toString('hex')] = id;
+
+            let token = crypto.randomBytes(16).toString('hex');
+            this.instancesTokens[id] = token;
+            this.instancesTokenReviver[token] = id;
         }
 
         return this.instances[id];
     }
 
-    static async authenticatedInstance(token: any): Promise<Enmelon> {
-        if (!this.instanceReviverToken[token]) throw Error('Invalid token');
+    static async instanceFromToken(token: any): Promise<Enmelon> {
+        if (!this.instancesTokenReviver[token]) throw Error('Invalid token');
 
-        return await this.instance(this.instanceReviverToken[token]);
+        return await this.instance(this.instancesTokenReviver[token]);
+    }
+
+    static instanceToken(id: string): string {
+        return this.instancesTokens[id];
     }
  
 }

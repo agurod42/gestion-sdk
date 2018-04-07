@@ -24,7 +24,7 @@ export default class GestionORT implements Gestion {
         await this.browser.close();
     }
 
-    async login(username: string, password: string): Promise<string> {
+    async login(username: string, password: string) {
         console.log('trying to login...');
         await this.page.goto('https://gestion.ort.edu.uy/general/vistas/login.html');
         await this.page.type('#codigo_de_persona', username);
@@ -36,8 +36,6 @@ export default class GestionORT implements Gestion {
         console.log('trying to get the session token...');
         this.sessionToken = await this.page.evaluate('sessionStorage.token');
         console.log('session token: ******');
-
-        return this.sessionToken;
     }
 
     async logout() {

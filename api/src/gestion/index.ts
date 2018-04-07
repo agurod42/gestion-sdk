@@ -4,7 +4,7 @@ export interface Gestion {
 
     init(): void;
     deinit(): void;
-    login(username: String, password: String): Promise<String>;
+    login(username: String, password: String): void;
     logout(): void;
     careers(): Promise<Career[]>;
     careerSubjects(careerId: String): Promise<Subject[]>;
