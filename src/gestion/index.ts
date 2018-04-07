@@ -7,7 +7,7 @@ export interface Gestion {
     login(username: String, password: String): void;
     logout(): void;
     careers(): Promise<Career[]>;
-    careerSubjects(careerId: String): Promise<Career[]>;
+    careerSubjects(careerId: String): Promise<Subject[]>;
     subjectRequirements(careerId: String, subjectId: String): Promise<SubjectRequirement>;
 
 }
