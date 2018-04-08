@@ -20,29 +20,9 @@ export default class Header extends React.Component {
                 <NavbarToggler onClick={() => this.setState({ isOpen: !this.state.isOpen })} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className='ml-auto' navbar>
-                    <NavItem>
-                        <NavLink href="/components">Components</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-                    </NavItem>
-                        <UncontrolledDropdown nav inNavbar>
-                            <DropdownToggle nav caret>
-                                Options
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                                <DropdownItem>
-                                    Option 1
-                                </DropdownItem>
-                                <DropdownItem>
-                                    Option 2
-                                </DropdownItem>
-                                <DropdownItem divider />
-                                <DropdownItem onClick={this.onLogoutButtonClick.bind(this)}>
-                                    Cerrar Sesión
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
+                        <NavItem>
+                            <NavLink onClick={this.onLogoutButtonClick.bind(this)}>Cerrar Sesión</NavLink>
+                        </NavItem>
                     </Nav>
                 </Collapse>
             </Navbar>
