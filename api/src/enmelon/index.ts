@@ -3,6 +3,10 @@ import { Gestion } from '../gestion';
 
 export default class Enmelon {
     
+    private cache: any = {
+        careerSubjectsGraph: {}
+    };
+    
     private gestion: Gestion;
 
     constructor(gestion: Gestion) {
@@ -39,6 +43,10 @@ export default class Enmelon {
     }
 
     async careerSubjectsGraph(careerId: string): Promise<any> {
+        if (this.cache.careerSubjectsGraph[careerId]) {
+            return Promise.resolve(this.cache.careerSubjectsGraph[careerId]);
+        }
+
         let subjects = await this.gestion.careerSubjects(careerId);
         let subjectsRequirements = await this.gestion.subjectsRequirements(careerId, subjects);
         let subjectsLinks: any[] = [];
@@ -52,10 +60,14 @@ export default class Enmelon {
             });
         }
 
-        return {
+        let careerSubjectsGraph = {
             links: subjectsLinks,
             nodes: subjects
         };
+
+        this.cache.careerSubjectsGraph[careerId] = careerSubjectsGraph;
+
+        return careerSubjectsGraph;
     }
 
     async subjecstRequirements(careerId: string, subjects: Subject[]): Promise<SubjectRequirement[]> {
