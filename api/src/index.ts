@@ -5,9 +5,9 @@ import EnmelonPool from './enmelon-pool';
 
 // handle process exit
 
-process.on('SIGINT', function() {
+process.on('SIGINT', async function() {
     console.log('deinitializating all instances...');
-    EnmelonPool.deinitAllInstances();
+    await EnmelonPool.deinitAllInstances();
     console.log('all instances deinitialized');
     process.exit();
 });
