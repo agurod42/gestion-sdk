@@ -32,4 +32,9 @@ export default class GestionEnmelon {
         });
     }
 
+    static tokenExists() {
+        let token = localStorage.getItem('gestion-enmelon-token');
+        return token != null && token.length > 0;
+    }
+
 }
