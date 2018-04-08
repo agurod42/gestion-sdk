@@ -1,17 +1,13 @@
-import React from 'react';
+import * as React from 'react';
 import { Collapse, Nav, NavItem, NavLink, Navbar, NavbarBrand, NavbarToggler } from 'reactstrap';
 
 import GestionEnmelon from '../../../services/GestionEnmelon';
 
 export default class Header extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            isOpen: false
-        };
-    }
+    state: any = {
+        isOpen: false
+    };
 
 	render() {
 		return (
@@ -21,7 +17,7 @@ export default class Header extends React.Component {
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className='ml-auto' navbar>
                         <NavItem>
-                            <NavLink onClick={this.onLogoutButtonClick.bind(this)}>Cerrar Sesión</NavLink>
+                            <NavLink onClick={this.onLogoutButtonClick}>Cerrar Sesión</NavLink>
                         </NavItem>
                     </Nav>
                 </Collapse>

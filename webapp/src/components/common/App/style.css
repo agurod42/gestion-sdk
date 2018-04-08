@@ -3,10 +3,14 @@ html, body, #root {
     height: 100%;
 }
 
-#header {
+.header {
     background: #661020;
 }
 
-#content {
+.content {
     overflow: hidden;
+}
+
+.flex-grow {
+    flex-grow: 1;
 }

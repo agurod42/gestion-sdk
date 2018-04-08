@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:3004/api';
 
 export default class GestionEnmelon {
 
-    static login(username, password) {
+    static login(username: string, password: string) {
         let req = this._request({
             method: 'POST',
             url: `${API_URL}/login`,
@@ -26,7 +26,7 @@ export default class GestionEnmelon {
         return Promise.resolve();
     }
 
-    static careerSubjectsGraph(careerId) {
+    static careerSubjectsGraph(careerId: string) {
         return this._request({
             method: 'GET',
             url: `${API_URL}/careerSubjectsGraph?careerId=${careerId}`
@@ -38,13 +38,13 @@ export default class GestionEnmelon {
         return token != null && token.length > 0;
     }
 
-    static _request(options) {
+    private static _request(options: any) {
         let token = localStorage.getItem('gestion-enmelon-token');
 
         if (token != null && token.length > 0) {
             options.headers = {
                 'x-gestion-enmelon-token': token
-            }
+            };
         }
         
         let req = axios(options);

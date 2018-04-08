@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Button, Col, Form, FormFeedback, FormGroup, Input, InputGroup, InputGroupAddon, Row } from 'reactstrap';
 
 import GestionEnmelon from '../../../services/GestionEnmelon';
@@ -7,27 +7,29 @@ import './style.css';
 
 export default class Login extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            data: {},
-            errors: {},
-            loading: false,
-        };
-    }
+    state = {
+        data: {
+            username: '',
+            password: ''
+        },
+        errors: {
+            username: null,
+            password: null
+        },
+        loading: false,
+    };
 
     render() {
 		return (
             <Row>
                 <Col xs={{ size: 4, offset: 4 }}>
-                    <Form expand='md'>
+                    <Form>
                         <FormGroup>
                             <InputGroup>
                                 <InputGroupAddon addonType='prepend'>u</InputGroupAddon>
                                 <Input 
                                     placeholder='Usuario'
-                                    invalid={this.state.errors.username} 
+                                    invalid={this.state.errors.username != null} 
                                     onChange={(e) => this.setState({ data: { ...this.state.data, username: e.target.value } })}
                                 />
                             </InputGroup>
@@ -41,7 +43,7 @@ export default class Login extends React.Component {
                                 <Input 
                                     type='password'
                                     placeholder='Contraseña' 
-                                    invalid={this.state.errors.password} 
+                                    invalid={this.state.errors.password != null} 
                                     onChange={(e) => this.setState({ data: { ...this.state.data, password: e.target.value } })}
                                 />
                             </InputGroup>
@@ -50,7 +52,7 @@ export default class Login extends React.Component {
                             }
                         </FormGroup>
                         <div className='text-center'>
-                            <Button onClick={this.onLoginButtonClick.bind(this)}>Iniciar Sesión</Button>
+                            <Button onClick={this.onLoginButtonClick}>Iniciar Sesión</Button>
                         </div>
                     </Form>
                 </Col>
@@ -63,7 +65,7 @@ export default class Login extends React.Component {
 
         GestionEnmelon.login(this.state.data.username, this.state.data.password).then(res => {
             window.location.href = '/';
-        })
+        });
     }
 
 }
