@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import { Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
@@ -7,7 +8,18 @@ import CareerSubjectsGraph from '../../screens/CareerSubjectsGraph';
 import Home from '../../screens/Home';
 import Login from '../../screens/Login';
 
+import GestionEnmelon from '../../../services/GestionEnmelon';
+
 import './style.css';
+
+const PrivateRoute = ({ component: Component, app, ...props }) => (
+    <Route 
+        {...props} 
+        render={props => (
+            GestionEnmelon.tokenExists() ? <Component {...props} /> : <Redirect to={{ pathname: `/login` }} />
+        )}
+    />
+);
 
 export default class App extends React.Component {
 
@@ -16,8 +28,8 @@ export default class App extends React.Component {
 			<div>
 			    <Header />
             	<Container fluid id='main-container'>
-					<Route exact path='/' component={Home} />
-					<Route exact path='/career-subjects-graph' component={CareerSubjectsGraph} />
+					<PrivateRoute exact path='/' component={Home} />
+					<PrivateRoute exact path='/career-subjects-graph' component={CareerSubjectsGraph} />
 					<Route exact path='/login' component={Login} />
 				</Container>
 			</div>

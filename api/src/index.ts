@@ -38,6 +38,17 @@ apiRouter.get('/careers', async (req, res) => {
     }
 });
 
+apiRouter.get('/careerSubjectsGraph', async (req, res) => {
+    try {
+        let enmelon = await EnmelonPool.instanceFromToken(req.header('x-gestion-enmelon-token'));
+        let body = await enmelon.careerSubjectsGraph(req.query.careerId);
+        res.send(body);
+    }
+    catch (err) {
+        res.status(400).send(err.message);
+    }
+});
+
 // webapp router
 let webappRouter = express.static(__dirname + '/../../webapp/build');
 

@@ -46,15 +46,15 @@ export default class Enmelon {
         for (var i in subjects) {
             subjectsRequirements[i].total.forEach((subjectDependency) => {
                 subjectsLinks.push({
-                    from: subjectDependency.subject.id,
-                    to: subjects[i].id
+                    source: subjectDependency.subject.id,
+                    target: subjects[i].id
                 });
             });
         }
 
         return {
-            nodes: subjects,
-            edges: subjectsLinks
+            links: subjectsLinks,
+            nodes: subjects
         };
     }
 
