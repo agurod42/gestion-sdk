@@ -17,8 +17,8 @@ export default class App extends React.Component {
 			    <Header />
             	<Container fluid id='main-container'>
 					<Route exact path='/' component={Home} />
-					<Route exact path='/login' component={Login} />
 					<Route exact path='/career-subjects-graph' component={CareerSubjectsGraph} />
+					<Route exact path='/login' component={Login} />
 				</Container>
 			</div>
 		);

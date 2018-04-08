@@ -1,6 +1,8 @@
 import React from 'react';
 import { Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink, Navbar, NavbarBrand, NavbarToggler, UncontrolledDropdown, } from 'reactstrap';
 
+import GestionEnmelon from '../../../services/GestionEnmelon';
+
 export default class Header extends React.Component {
 
     constructor(props) {
@@ -36,8 +38,8 @@ export default class Header extends React.Component {
                                     Option 2
                                 </DropdownItem>
                                 <DropdownItem divider />
-                                <DropdownItem>
-                                    Reset
+                                <DropdownItem onClick={this.onLogoutButtonClick.bind(this)}>
+                                    Cerrar Sesión
                                 </DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
@@ -45,6 +47,12 @@ export default class Header extends React.Component {
                 </Collapse>
             </Navbar>
 		);
-	}
+    }
+    
+    onLogoutButtonClick() {
+        GestionEnmelon.logout().then(() => {
+            window.location.href = '/';
+        });
+    }
 
 }

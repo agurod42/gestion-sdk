@@ -11,7 +11,7 @@ export default class GestionEnmelon {
             data: {
                 username: username,
                 password: password
-            },
+            }
         });
 
         req.then(res => {
@@ -21,14 +21,21 @@ export default class GestionEnmelon {
         return req;
     }
 
-    static careerSubjectsGraph() {
+    static logout() {
+        localStorage.removeItem('gestion-enmelon-token');
+        return Promise.resolve();
+    }
+
+    static careerSubjectsGraph(careerId) {
         return axios({
             method: 'GET',
             url: `${API_URL}/careerSubjectsGraph`,
             data: {
-                
+                careerId: careerId
             },
-            json: true
+            headers: {
+                'x-gestion-enmelon-token': localStorage.getItem('gestion-enmelon-token')
+            }
         });
     }
 
