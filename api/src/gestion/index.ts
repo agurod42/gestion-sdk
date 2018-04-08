@@ -4,11 +4,11 @@ export interface Gestion {
 
     init(): void;
     deinit(): void;
-    login(username: String, password: String): void;
+    login(username: string, password: string): void;
     logout(): void;
     isUserLoggedIn(): Promise<boolean>;
     careers(): Promise<Career[]>;
-    careerSubjects(careerId: String): Promise<Subject[]>;
-    subjectsRequirements(careerId: String, subjects: Subject[]): Promise<SubjectRequirement[]>;
+    careerSubjects(careerId: string): Promise<Subject[]>;
+    subjectsRequirements(careerId: string, subjects: Subject[]): Promise<SubjectRequirement[]>;
 
 }

@@ -1,6 +1,6 @@
 export default class Career {
 
-    public id: String;
-    public title: String;
+    public id: string;
+    public title: string;
 
 } 

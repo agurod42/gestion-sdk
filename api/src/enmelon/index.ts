@@ -34,11 +34,11 @@ export default class Enmelon {
         return await this.gestion.careers();
     }
 
-    async careerSubjects(careerId: String): Promise<Subject[]> {
+    async careerSubjects(careerId: string): Promise<Subject[]> {
         return await this.gestion.careerSubjects(careerId);
     }
 
-    async careerSubjectsGraph(careerId: String): Promise<any> {
+    async careerSubjectsGraph(careerId: string): Promise<any> {
         let subjects = await this.gestion.careerSubjects(careerId);
         let subjectsRequirements = await this.gestion.subjectsRequirements(careerId, subjects);
         let subjectsLinks: any[] = [];
@@ -58,7 +58,7 @@ export default class Enmelon {
         };
     }
 
-    async subjecstRequirements(careerId: String, subjects: Subject[]): Promise<SubjectRequirement[]> {
+    async subjecstRequirements(careerId: string, subjects: Subject[]): Promise<SubjectRequirement[]> {
         return await this.gestion.subjectsRequirements(careerId, subjects);
     }
 
