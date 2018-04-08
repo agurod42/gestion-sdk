@@ -61,8 +61,6 @@ export default class Login extends React.Component {
     onLoginButtonClick() {
         this.setState({ loading: true });
 
-        console.log(this.state.data);
-
         GestionEnmelon.login(this.state.data.username, this.state.data.password).then(res => {
             window.location.href = '/';
         })

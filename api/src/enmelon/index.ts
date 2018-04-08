@@ -17,7 +17,12 @@ export default class Enmelon {
         await this.gestion.deinit();
     }
 
-    async login(username: String, password: String) {
+    async login(username: string, password: string) {
+        if (await this.gestion.isUserLoggedIn()) {
+            console.log('User already logged in');
+            return;
+        }
+
         await this.gestion.login(username, password);
     }
 

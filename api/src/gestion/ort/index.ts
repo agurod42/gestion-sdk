@@ -42,8 +42,7 @@ export default class GestionORT implements Gestion {
     }
 
     async isUserLoggedIn(): Promise<boolean> {
-        await this.page.goto('https://gestion.ort.edu.uy/general/vistas/principal.html');
-        return !/login\.html$/.test(this.page.url());
+        return Promise.resolve(this.sessionToken != null && this.sessionToken.length > 0);
     }
 
     async careers(): Promise<Career[]> {

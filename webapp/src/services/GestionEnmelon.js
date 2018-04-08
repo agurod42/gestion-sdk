@@ -15,7 +15,7 @@ export default class GestionEnmelon {
         });
 
         req.then(res => {
-            localStorage.setItem('gestion-enmelon-token', res);
+            localStorage.setItem('gestion-enmelon-token', res.data);
         });
 
         return req;
