@@ -1,6 +1,6 @@
 import React from 'react';
 import { Graph } from 'react-d3-graph';
-import { Col, Row } from 'reactstrap';
+import { AutoSizer } from 'react-virtualized';
 
 import GestionEnmelon from '../../../services/GestionEnmelon';
 
@@ -27,29 +27,30 @@ export default class CareerSubjectsGraph extends React.Component {
     }
 
     render() {
-		return (
-            <Row>
-                <Col>
-                    { Object.keys(this.state.data).length > 0 &&
-                        <Graph
-                            id='subjects-graph' // id is mandatory, if no id is defined rd3g will throw an error
-                            data={this.state.data}
-                            config={{
-                                node: {
-                                    color: 'lightgreen',
-                                    size: 120,
-                                    highlightStrokeColor: 'blue'
-                                },
-                                nodeHighlightBehavior: true,
-                                link: {
-                                    highlightColor: 'lightblue'
-                                }
-                            }}
-                        />
-                    }
-                </Col>
-            </Row>
-		);
+		return ( Object.keys(this.state.data).length > 0 &&
+            <AutoSizer>
+                {({ height, width }) => (
+                    <Graph
+                        id='subjects-graph' // id is mandatory, if no id is defined rd3g will throw an error
+                        data={this.state.data}
+                        config={{
+                            width: width,
+                            height: height,
+                            nodeHighlightBehavior: true,
+                            node: {
+                                color: 'lightgreen',
+                                highlightStrokeColor: 'blue',
+                                labelProperty: 'title',
+                                size: 120,
+                            },
+                            link: {
+                                highlightColor: 'lightblue'
+                            },
+                        }}
+                    />
+                )}
+            </AutoSizer>
+        );
 	}
 
 }
