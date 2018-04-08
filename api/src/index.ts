@@ -23,7 +23,7 @@ apiRouter.post('/login', async (req, res) => {
         res.send(enmelonToken);
     }
     catch (err) {
-        res.status(400).send(err);
+        res.status(400).send(err.message);
     }
 });
 
@@ -34,8 +34,7 @@ apiRouter.get('/careers', async (req, res) => {
         res.send(body);
     }
     catch (err) {
-        console.log(err);
-        res.status(400).send(err);
+        res.status(400).send(err.message);
     }
 });
 
