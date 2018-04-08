@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../Header';
+import { Col, Row } from 'reactstrap';
 
-import GestionEnmelon from '../../services/GestionEnmelon';
+import GestionEnmelon from '../../../services/GestionEnmelon';
 
 export default class CareerSubjectsGraph extends React.Component {
 
@@ -26,10 +26,10 @@ export default class CareerSubjectsGraph extends React.Component {
 
     render() {
 		return (
-            <div>
-			    <Header />
-
-            </div>
+            <Row>
+                <Col>
+                </Col>
+            </Row>
 		);
 	}
 

@@ -1,0 +1,12 @@
+html, body {
+    background: #EAEFEF !important;
+}
+
+nav.navbar {
+    background: #661020;
+}
+
+#main-container {
+    background: none;
+    margin-top: 15px;
+}

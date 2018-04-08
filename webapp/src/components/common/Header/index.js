@@ -14,8 +14,8 @@ export default class Header extends React.Component {
 	render() {
 		return (
 			<Navbar dark expand='md'>
-            <NavbarBrand href='/'>gestion-enmelon</NavbarBrand>
-            <NavbarToggler onClick={() => this.setState({ isOpen: !this.state.isOpen })} />
+                <NavbarBrand href='/'>gestion-enmelon</NavbarBrand>
+                <NavbarToggler onClick={() => this.setState({ isOpen: !this.state.isOpen })} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className='ml-auto' navbar>
                     <NavItem>
