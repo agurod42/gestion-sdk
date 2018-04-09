@@ -8,6 +8,10 @@ declare module 'react-vis-force' {
         zoom?: boolean
     }
 
+    interface ForceGraphArrowLinkProps {
+        link?: any
+    }
+
     interface ForceGraphLinkProps {
         link?: any
     }
@@ -18,6 +22,9 @@ declare module 'react-vis-force' {
     }
 
     export class InteractiveForceGraph extends React.Component<InteractiveForceGraphProps, any> {
+    }
+
+    export class ForceGraphArrowLink extends React.Component<ForceGraphArrowLinkProps, any> {
     }
 
     export class ForceGraphLink extends React.Component<ForceGraphLinkProps, any> {

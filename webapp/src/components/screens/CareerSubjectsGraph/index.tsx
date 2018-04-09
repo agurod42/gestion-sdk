@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AutoSizer } from 'react-virtualized';
-import { InteractiveForceGraph, ForceGraphNode, ForceGraphLink } from 'react-vis-force';
+import { InteractiveForceGraph, ForceGraphArrowLink, ForceGraphNode } from 'react-vis-force';
 
 import GestionEnmelon from '../../../services/GestionEnmelon';
 
@@ -30,7 +30,7 @@ export default class CareerSubjectsGraph extends React.Component {
                 <AutoSizer>
                     {({ height, width }) => (
                         <InteractiveForceGraph
-                            simulationOptions={{ 
+                            simulationOptions={{
                                 width: width || window.innerWidth, 
                                 height: height || window.innerHeight - 56 
                             }}
@@ -42,7 +42,7 @@ export default class CareerSubjectsGraph extends React.Component {
                                 <ForceGraphNode key={node.id} node={node} fill='red' />
                             ))}
                             {this.state.data.links.map((link: any) => (
-                                <ForceGraphLink key={`${link.source}-${link.target}`} link={link} />
+                                <ForceGraphArrowLink key={`${link.source}-${link.target}`} link={link} />
                             ))}
                         </InteractiveForceGraph>
                     )}
