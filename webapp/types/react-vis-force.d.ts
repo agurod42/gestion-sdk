@@ -23,6 +23,7 @@ declare module 'react-vis-force' {
         fill?: string
         node?: any
         r?: number
+        showLabel?: boolean
     }
 
     export class ForceGraph extends React.Component<ForceGraphProps, any> {

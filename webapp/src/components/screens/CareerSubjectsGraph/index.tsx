@@ -4,6 +4,8 @@ import { InteractiveForceGraph, ForceGraphArrowLink, ForceGraphNode } from 'reac
 
 import GestionEnmelon from '../../../services/GestionEnmelon';
 
+const GRAPH_NODE_MIN_RADIUS = 5;
+
 export default class CareerSubjectsGraph extends React.Component {
 
     state: any = {
@@ -32,7 +34,10 @@ export default class CareerSubjectsGraph extends React.Component {
                         <InteractiveForceGraph
                             simulationOptions={{
                                 width: width || window.innerWidth, 
-                                height: height || window.innerHeight - 56 
+                                height: height || window.innerHeight - 56,
+                                strength: {
+                                    charge: GRAPH_NODE_MIN_RADIUS * -50
+                                }
                             }}
                             labelAttr='title'
                             highlightDependencies={true}
@@ -52,15 +57,22 @@ export default class CareerSubjectsGraph extends React.Component {
 
         this.state.data.links.map((link: any) => {
             if (nodeR[link.source] === undefined) {
-                nodeR[link.source] = 3;
+                nodeR[link.source] = GRAPH_NODE_MIN_RADIUS;
             }
 
-            children.push(<ForceGraphArrowLink key={`${link.source}-${link.target}`} link={link} />);
+            children.push(<ForceGraphArrowLink key={`${link.source}..${link.target}`} link={link} />);
             nodeR[link.source]++;
         });
         
         this.state.data.nodes.map((node: any) => {
-            children.push(<ForceGraphNode key={node.id} node={node} fill='#292929' r={nodeR[node.id] || 3} />);
+            children.push(
+                <ForceGraphNode 
+                    key={node.id} 
+                    node={node} 
+                    r={nodeR[node.id] || GRAPH_NODE_MIN_RADIUS} 
+                    fill='#292929'
+                />
+            );
         });
 
         return children;
