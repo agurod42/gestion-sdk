@@ -38,17 +38,32 @@ export default class CareerSubjectsGraph extends React.Component {
                             highlightDependencies={true}
                             zoom={true}
                         >
-                            {this.state.data.nodes.map((node: any) => (
-                                <ForceGraphNode key={node.id} node={node} fill='red' />
-                            ))}
-                            {this.state.data.links.map((link: any) => (
-                                <ForceGraphArrowLink key={`${link.source}-${link.target}`} link={link} />
-                            ))}
+                            {this.renderLinksAndNodes()}
                         </InteractiveForceGraph>
                     )}
                 </AutoSizer>
             );
         }
-	}
+    }
+
+    renderLinksAndNodes(): React.ReactNode {
+        let children: any[] = [];
+        let nodeR: any = {};
+
+        this.state.data.links.map((link: any) => {
+            if (nodeR[link.source] === undefined) {
+                nodeR[link.source] = 3;
+            }
+
+            children.push(<ForceGraphArrowLink key={`${link.source}-${link.target}`} link={link} />);
+            nodeR[link.source]++;
+        });
+        
+        this.state.data.nodes.map((node: any) => {
+            children.push(<ForceGraphNode key={node.id} node={node} fill='#292929' r={nodeR[node.id] || 3} />);
+        });
+
+        return children;
+    }
 
 }

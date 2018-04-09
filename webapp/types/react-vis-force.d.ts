@@ -1,11 +1,14 @@
 
 declare module 'react-vis-force' {
 
-    interface InteractiveForceGraphProps {
+    interface ForceGraphProps {
         highlightDependencies?: boolean
         labelAttr?: string
         simulationOptions?: any
         zoom?: boolean
+    }
+
+    interface InteractiveForceGraphProps extends ForceGraphProps {
     }
 
     interface ForceGraphArrowLinkProps {
@@ -19,6 +22,10 @@ declare module 'react-vis-force' {
     interface ForceGraphNodeProps {
         fill?: string
         node?: any
+        r?: number
+    }
+
+    export class ForceGraph extends React.Component<ForceGraphProps, any> {
     }
 
     export class InteractiveForceGraph extends React.Component<InteractiveForceGraphProps, any> {
