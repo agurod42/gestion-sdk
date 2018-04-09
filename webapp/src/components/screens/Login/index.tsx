@@ -70,7 +70,7 @@ export default class Login extends React.Component {
         this.setState({ loading: true });
 
         GestionEnmelon.login(this.state.data.username, this.state.data.password).then(res => {
-            window.location.href = '/';
+            window.location.href = `${process.env.PUBLIC_URL}`;
         });
     }
 

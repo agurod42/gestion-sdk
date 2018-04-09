@@ -1,0 +1,22 @@
+{
+  "name": "gestion-enmelon",
+  "version": "1.0.0",
+  "description": "Aplicación web con los gráficos y estadísticas que le faltan a https://gestion.ort.edu.uy.",
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "cd webapp && npm run build && cd ../api && npm run build && node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agurz/gestion-enmelon.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/agurz/gestion-enmelon/issues"
+  },
+  "homepage": "https://github.com/agurz/gestion-enmelon#readme"
+}

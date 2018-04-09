@@ -27,7 +27,7 @@ export default class Header extends React.Component {
     
     onLogoutButtonClick() {
         GestionEnmelon.logout().then(() => {
-            window.location.href = '/';
+            window.location.href = `${process.env.PUBLIC_URL}`;
         });
     }
 
