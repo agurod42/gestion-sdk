@@ -6,7 +6,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "cd webapp && npm run build && cd ../api && npm run build && node dist/index.js",
+    "start": "cd webapp && npm install && npm run build && cd ../api && npm install && npm run build && node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
