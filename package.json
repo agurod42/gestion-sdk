@@ -6,8 +6,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "build-api": "cd api && npm install && npm install --only=dev && npm run build && cd..",
-    "build-webapp": "cd webapp && npm install && npm install --only=dev && npm run build && cd..",
+    "build-api": "cd api && npm install && npm install --only=dev && npm run build && cd ..",
+    "build-webapp": "cd webapp && npm install && npm install --only=dev && npm run build && cd ..",
     "build": "npm run build-api && npm run build-webapp",
     "heroku-prebuild": "npm run build",
     "start": "node api/dist/index.js",
