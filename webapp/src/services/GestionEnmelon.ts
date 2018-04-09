@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3004/api';
+const API_URL = 'https://gestion-enmelon.herokuapp.com/api';
 
 export default class GestionEnmelon {
 

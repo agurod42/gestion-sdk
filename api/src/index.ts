@@ -61,6 +61,8 @@ app.use(cors());
 app.use('/api', apiRouter);
 app.use('/webapp', webappRouter);
 
+app.get('/', (req, res) => res.redirect('/webapp'));
+
 app.listen(process.env.PORT || 3004, function () {
     console.log('gestion-enmelon ready to rock!');
 });
