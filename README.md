@@ -2,6 +2,8 @@
 
 Aplicación web con los gráficos y estadísticas que le faltan a https://gestion.ort.edu.uy.
 
+![](docs/screenshot.png)
+
 ### Implementado:
 
 - [x] Gráfico de dependencia de materias
@@ -9,7 +11,7 @@ Aplicación web con los gráficos y estadísticas que le faltan a https://gestio
 ### Proximamente:
 
 - [ ] Créditos aprobados en función del tiempo
-- [ ] Idea?
+- [ ] [Alguna idea?](/issues)
 
 ## Licencia
 
