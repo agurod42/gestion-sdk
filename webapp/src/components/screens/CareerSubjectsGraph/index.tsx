@@ -36,7 +36,7 @@ export default class CareerSubjectsGraph extends React.Component {
                                 width: width || window.innerWidth, 
                                 height: height || window.innerHeight - 56,
                                 strength: {
-                                    charge: GRAPH_NODE_MIN_RADIUS * -50
+                                    charge: GRAPH_NODE_MIN_RADIUS * -100
                                 }
                             }}
                             labelAttr='title'
@@ -70,6 +70,7 @@ export default class CareerSubjectsGraph extends React.Component {
                     key={node.id} 
                     node={node} 
                     r={nodeR[node.id] || GRAPH_NODE_MIN_RADIUS} 
+                    showLabel={true}
                     fill='#292929'
                 />
             );
