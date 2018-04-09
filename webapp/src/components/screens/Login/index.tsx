@@ -19,6 +19,12 @@ export default class Login extends React.Component {
         loading: false,
     };
 
+    constructor(props: any) {
+        super(props);
+
+        this.onLoginButtonClick = this.onLoginButtonClick.bind(this);
+    }
+
     render() {
 		return (
             <Row>
