@@ -1,24 +1,25 @@
-import crypto from 'crypto';
-import Enmelon from '../enmelon';
-import GestionORT from '../gestion/ort';
+const crypto = require('crypto');
+const Gestion = require('../gestion');
 
-export default class EnmelonPool {
+class EnmelonPool {
 
-    private static instances: any = {};
-    private static instancesTokens: any = {};
-    private static instancesTokenReviver: any = {};
+    constructor() {
+        this.instances = {};
+        this.instancesTokens = {};
+        this.instancesTokenReviver = {};
+    }
 
-    static async deinitAllInstances() {
+    async deinitAllInstances() {
         for (var i in this.instances) {
             await this.instances[i].deinit();
         }
     }
 
-    static async instance(id: any): Promise<Enmelon> {
+    async instance(id) {
         if (!id) throw Error('instance id cannot be empty');
 
         if (!this.instances[id]) {
-            this.instances[id] = new Enmelon(new GestionORT());
+            this.instances[id] = new Gestion();
             await this.instances[id].init();
 
             let token = crypto.randomBytes(16).toString('hex');
@@ -29,14 +30,16 @@ export default class EnmelonPool {
         return this.instances[id];
     }
 
-    static async instanceFromToken(token: any): Promise<Enmelon> {
+    async instanceFromToken(token) {
         if (!this.instancesTokenReviver[token]) throw Error('Invalid token');
 
         return await this.instance(this.instancesTokenReviver[token]);
     }
 
-    static instanceToken(id: string): string {
+    async instanceToken(id) {
         return this.instancesTokens[id];
     }
  
 }
+
+module.exports = new EnmelonPool();

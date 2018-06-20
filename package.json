@@ -1,26 +1,21 @@
 {
   "name": "gestion-enmelon",
   "version": "1.0.0",
-  "description": "Aplicación web con los gráficos y estadísticas que le faltan a https://gestion.ort.edu.uy.",
-  "dependencies": {
-  },
-  "devDependencies": {},
+  "description": "",
   "scripts": {
-    "build-api": "cd api && npm install && npm install --only=dev && npm run build && cd ..",
-    "build-webapp": "cd webapp && npm install && npm install --only=dev && npm run build && cd ..",
-    "build": "npm run build-api && npm run build-webapp",
-    "heroku-prebuild": "npm run build",
-    "start": "node api/dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/agurz/gestion-enmelon.git"
+    "start": "./node_modules/.bin/nodemon --exec node -- ./src/index.js",
+    "test": "./node_modules/.bin/jest test"
   },
   "author": "",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/agurz/gestion-enmelon/issues"
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "puppeteer": "^1.2.0"
   },
-  "homepage": "https://github.com/agurz/gestion-enmelon#readme"
+  "devDependencies": {
+    "jest": "^23.1.0",
+    "nodemon": "^1.17.3"
+  }
 }

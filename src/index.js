@@ -1,7 +1,7 @@
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import express from 'express';
-import EnmelonPool from './enmelon-pool';
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const express = require('express');
+const EnmelonPool = require('./enmelon-pool');
 
 // handle process exit
 
