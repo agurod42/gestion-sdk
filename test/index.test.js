@@ -17,6 +17,13 @@ test('login with wrong credentials', async () => {
     expect(gestion.login('invalid_user', 'invalid_password')).rejects.toEqual(new Error());
 });
 
+test('carrerasActivas', async () => {
+    let gestion = await GestionPool.instance(process.env.GESTION_USER);
+    let carrerasActivas = await gestion.carrera.activas();
+    expect(carrerasActivas.length > 0).toBeTruthy();
+    expect(carrerasActivas[0]).toHaveProperty('IdProducto');
+});
+
 test('dictadosActivos', async () => {
     let gestion = await GestionPool.instance(process.env.GESTION_USER);
     let dictadosActivos = await gestion.dictado.activos();

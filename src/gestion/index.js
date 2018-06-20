@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const Carrera = require('./internal/carrera');
 const Dictado = require('./internal/dictado');
 
 const GESTION_API_URL = 'https://gestionapi.ort.edu.uy/ORTSecure';
@@ -11,6 +12,7 @@ module.exports = class Gestion {
         this.pageConsoleHandled = false;
         this.sessionToken = '';
 
+        this.carrera = new Carrera(this);
         this.dictado = new Dictado(this);
     }
 
