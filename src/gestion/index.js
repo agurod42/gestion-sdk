@@ -36,6 +36,7 @@ module.exports = class Gestion {
             return this.sessionToken;
         }
         catch (ex) {
+            await this.page.screenshot({ path: 'debug.png' });
             console.log(ex);
         }
     }

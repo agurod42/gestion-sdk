@@ -12,6 +12,7 @@
     "puppeteer": "^1.2.0"
   },
   "devDependencies": {
+    "dotenv": "^6.0.0",
     "jest": "^23.1.0",
     "nodemon": "^1.17.3"
   }
