@@ -12,6 +12,11 @@ test('login', async () => {
     expect(token.length > 0).toBeTruthy();
 });
 
+test('login with wrong credentials', async () => {
+    let gestion = await GestionPool.instance('invalid_user');
+    expect(gestion.login('invalid_user', 'invalid_password')).rejects.toEqual(new Error());
+});
+
 test('dictadosActivos', async () => {
     let gestion = await GestionPool.instance(process.env.GESTION_USER);
     let dictadosActivos = await gestion.dictado.activos();

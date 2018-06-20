@@ -25,6 +25,8 @@ module.exports = class Gestion {
     }
 
     async login(username, password) {
+        if (this.sessionToken) return;
+
         await this.page.goto('https://gestion.ort.edu.uy/general/vistas/login.html');
         await this.page.type('#codigo_de_persona', username);
         await this.page.type('#contraseña_persona', password);
@@ -36,8 +38,7 @@ module.exports = class Gestion {
             return this.sessionToken;
         }
         catch (ex) {
-            await this.page.screenshot({ path: 'debug.png' });
-            console.log(ex);
+            throw Error(`Login failed: ${ex.message}`);
         }
     }
 
