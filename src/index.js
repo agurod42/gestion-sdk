@@ -1,13 +1,13 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
-const EnmelonPool = require('./enmelon-pool');
+const GestionPool = require('./gestion-pool');
 
 // handle process exit
 
 process.on('SIGINT', async function() {
     console.log('deinitializating all instances...');
-    await EnmelonPool.deinitAllInstances();
+    await GestionPool.deinitAllInstances();
     console.log('all instances deinitialized');
     process.exit();
 });
@@ -17,10 +17,10 @@ let apiRouter = express.Router();
 
 apiRouter.post('/login', async (req, res) => {
     try {
-        let enmelon = await EnmelonPool.instance(req.body.username);
-        let enmelonToken = EnmelonPool.instanceToken(req.body.username);
-        await enmelon.login(req.body.username, req.body.password);
-        res.send(enmelonToken);
+        let gestion = await GestionPool.instance(req.body.username);
+        let gestionToken = GestionPool.instanceToken(req.body.username);
+        await gestion.login(req.body.username, req.body.password);
+        res.send(gestionToken);
     }
     catch (err) {
         res.status(400).send(err.message);
@@ -29,8 +29,8 @@ apiRouter.post('/login', async (req, res) => {
 
 apiRouter.get('/careers', async (req, res) => {
     try {
-        let enmelon = await EnmelonPool.instanceFromToken(req.header('x-gestion-enmelon-token'));
-        let body = await enmelon.careers();
+        let gestion = await GestionPool.instanceFromToken(req.header('x-gestion-api-token'));
+        let body = await gestion.careers();
         res.send(body);
     }
     catch (err) {
@@ -40,8 +40,8 @@ apiRouter.get('/careers', async (req, res) => {
 
 apiRouter.get('/careerSubjectsGraph', async (req, res) => {
     try {
-        let enmelon = await EnmelonPool.instanceFromToken(req.header('x-gestion-enmelon-token'));
-        let body = await enmelon.careerSubjectsGraph(req.query.careerId);
+        let gestion = await GestionPool.instanceFromToken(req.header('x-gestion-api-token'));
+        let body = await gestion.careerSubjectsGraph(req.query.careerId);
         res.send(body);
     }
     catch (err) {
@@ -64,5 +64,5 @@ app.use('/webapp', webappRouter);
 app.get('/', (req, res) => res.redirect('/webapp'));
 
 app.listen(process.env.PORT || 3004, function () {
-    console.log('gestion-enmelon ready to rock!');
+    console.log('gestion-api ready to rock!');
 });

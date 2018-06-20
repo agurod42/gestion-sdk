@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const Gestion = require('../gestion');
 
-class EnmelonPool {
+class GestionPool {
 
     constructor() {
         this.instances = {};
@@ -42,4 +42,4 @@ class EnmelonPool {
  
 }
 
-module.exports = new EnmelonPool();
+module.exports = new GestionPool();
