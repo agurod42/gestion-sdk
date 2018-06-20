@@ -12,9 +12,16 @@ test('login', async () => {
     expect(token.length > 0).toBeTruthy();
 });
 
-test('cursosActivos', async () => {
+test('dictadosActivos', async () => {
     let gestion = await GestionPool.instance('194412');
-    let cursosActivos = await gestion.cursosActivos();
-    expect(cursosActivos.length > 0).toBeTruthy();
-    expect(cursosActivos[0]).toHaveProperty('ObjMateria.IdMateria');
+    let dictadosActivos = await gestion.dictado.activos();
+    expect(dictadosActivos.length > 0).toBeTruthy();
+    expect(dictadosActivos[0]).toHaveProperty('ObjMateria.IdMateria');
+});
+
+test('dictadoEvaluaciones', async () => {
+    let gestion = await GestionPool.instance('194412');
+    let dictadosActivos = await gestion.dictado.activos();
+    let evaluaciones = await gestion.dictado.evaluaciones(dictadosActivos[0].Id);
+    expect(evaluaciones).toHaveProperty('CantidadPuntos');
 });

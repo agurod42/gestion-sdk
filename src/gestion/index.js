@@ -1,14 +1,17 @@
 const puppeteer = require('puppeteer');
+const Dictado = require('./internal/dictado');
 
 const GESTION_API_URL = 'https://gestionapi.ort.edu.uy/ORTSecure';
 
-module.exports = class GestionORT {
+module.exports = class Gestion {
     
     constructor() {
         this.browser = null;
         this.page = null;
         this.pageConsoleHandled = false;
         this.sessionToken = '';
+
+        this.dictado = new Dictado(this);
     }
 
     async init() {
@@ -44,12 +47,8 @@ module.exports = class GestionORT {
         return this.sessionToken != null && this.sessionToken.length > 0;
     }
 
-    async cursosActivos() {
-        return this._apiRequestWithJSONResponse('Dictados', 'estado=MATERIASACTIVAS');
-    }
-
     async _apiRequestWithJSONResponse(resource, qs) {
-        let res = await this._pageAjaxRequest('GET', `${GESTION_API_URL}/${resource}?${qs}`);
+        let res = await this._pageAjaxRequest('GET', `${GESTION_API_URL}/${resource}?${qs || ''}`);
         return JSON.parse(res);
     }
 
