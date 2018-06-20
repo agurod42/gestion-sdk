@@ -12,13 +12,11 @@ module.exports = class GestionORT {
     }
 
     async init() {
-        console.log('init');
         this.browser = await puppeteer.launch();
         this.page = await this.browser.newPage();
     }
 
     async deinit() {
-        console.log('deinit');
         await this.page.close();
         await this.browser.close();
     }
@@ -62,8 +60,6 @@ module.exports = class GestionORT {
     }
 
     async _pageAjaxRequests(reqs) {
-        this._pageConsoleLog(true);
-
         let res = await this.page.evaluate(
             (reqs) => {
                 let res = [];
@@ -88,8 +84,6 @@ module.exports = class GestionORT {
             },
             reqs
         );
-
-        this._pageConsoleLog(false);
 
         return res;
     }
