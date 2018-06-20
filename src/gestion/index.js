@@ -44,13 +44,12 @@ module.exports = class GestionORT {
         return this.sessionToken != null && this.sessionToken.length > 0;
     }
 
-    async careers() {
-        let res = await this._pageAjaxRequest('GET', `${GESTION_API_URL}/PerfilAcademico/Titulos?estado=CHEQUEOPREVIAS`);
-        return JSON.parse(res);
+    async cursosActivos() {
+        return this._apiRequestWithJSONResponse('Dictados', 'estado=MATERIASACTIVAS');
     }
 
-    async careerSubjects(careerId) {
-        let res = await this._pageAjaxRequest('GET', `${GESTION_API_URL}/PerfilAcademico/MateriaDelTitulo?idTitulo=${careerId}`);
+    async _apiRequestWithJSONResponse(resource, qs) {
+        let res = await this._pageAjaxRequest('GET', `${GESTION_API_URL}/${resource}?${qs}`);
         return JSON.parse(res);
     }
 
