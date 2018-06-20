@@ -8,8 +8,8 @@ afterAll(async () => {
 
 test('login', async () => {
     let gestion = await GestionPool.instance('194412');
-    let res = await gestion.login('194412', 'F3d320102');
-    expect(res.length > 0).toBeTruthy();
+    let token = await gestion.login('194412', 'F3d320102');
+    expect(token.length > 0).toBeTruthy();
 });
 
 test('dictados', async () => {
