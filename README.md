@@ -1,6 +1,8 @@
-# gestion-api
+# gestion-api 
 
-La API de https://gestion.ort.edu.uy.
+[![Build Status](https://travis-ci.org/agurodriguez/gestion-api.svg?branch=master)](https://travis-ci.org/agurodriguez/gestion-api)
+
+La API que le faltaba a https://gestion.ort.edu.uy.
 
 ## Licencia
 
