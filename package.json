@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "./node_modules/.bin/nodemon --exec node -- ./src/index.js",
     "test": "./node_modules/.bin/jest test"
   },
   "author": "",
@@ -13,7 +12,6 @@
   },
   "devDependencies": {
     "dotenv": "^6.0.0",
-    "jest": "^23.1.0",
-    "nodemon": "^1.17.3"
+    "jest": "^23.1.0"
   }
 }
