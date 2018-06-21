@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 const Carrera = require('./internal/carrera');
 const Dictado = require('./internal/dictado');
 
+const DEFAULT_LOGIN_TIMEOUT = 3000;
 const GESTION_API_URL = 'https://gestionapi.ort.edu.uy/ORTSecure';
 
 module.exports = class Gestion {
@@ -26,7 +27,7 @@ module.exports = class Gestion {
         await this.browser.close();
     }
 
-    async login(username, password) {
+    async login(username, password, timeout) {
         if (this.sessionToken) return;
 
         await this.page.goto('https://gestion.ort.edu.uy/general/vistas/login.html');
@@ -35,7 +36,7 @@ module.exports = class Gestion {
         await this.page.type('#contraseña_persona', String.fromCharCode(13));
         
         try {
-            await this.page.waitForSelector('#InicioBienvenida', { timeout: 2000 });
+            await this.page.waitForSelector('#InicioBienvenida', { timeout: timeout || DEFAULT_LOGIN_TIMEOUT });
             this.sessionToken = await this.page.evaluate('sessionStorage.token');
             return this.sessionToken;
         }
