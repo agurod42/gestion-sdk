@@ -8,7 +8,7 @@ afterAll(async () => {
 
 test('login', async () => {
     let gestion = await GestionPool.instance(process.env.GESTION_USER);
-    let token = await gestion.login(process.env.GESTION_USER, process.env.GESTION_PASSWORD, 10000);
+    let token = await gestion.login(process.env.GESTION_USER, process.env.GESTION_PASSWORD);
     expect(token.length > 0).toBeTruthy();
 }, 10000);
 

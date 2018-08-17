@@ -27,7 +27,7 @@ module.exports = class Gestion {
         await this.browser.close();
     }
 
-    async login(username, password, timeout) {
+    async login(username, password) {
         if (this.sessionToken) return;
 
         await this.page.goto('https://gestion.ort.edu.uy/general/vistas/login.html');
@@ -36,12 +36,20 @@ module.exports = class Gestion {
         await this.page.type('#contraseña_persona', String.fromCharCode(13));
         
         try {
-            await this.page.waitForSelector('#InicioBienvenida', { timeout: timeout || DEFAULT_LOGIN_TIMEOUT });
-            this.sessionToken = await this.page.evaluate('sessionStorage.token');
-            return this.sessionToken;
+            await this.page.waitForSelector('#InicioBienvenida', { timeout: 4000 });
+            return this.sessionToken = await this.page.evaluate(() => sessionStorage.token);
         }
         catch (ex) {
-            throw Error(`Login failed: ${ex.message}`);
+            throw Error(await this._tryToObtainErrorMessage(ex));
+        }
+    }
+
+    async _tryToObtainErrorMessage(prevException) {
+        try {
+            return await this.page.evaluate(() => document.querySelector('.DialogAlert .ng-binding').textContent);
+        }
+        catch (ex) {
+            throw prevException;
         }
     }
 
@@ -106,6 +114,10 @@ module.exports = class Gestion {
 
     _pageConsoleLogHandler(log) {
         console.log(log.text());
+    }
+
+    async _screenshot() {
+        await this.page.screenshot({ path: `screenshot.png` });
     }
 
 }
