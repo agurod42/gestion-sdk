@@ -1,5 +1,5 @@
 {
-  "name": "gestion-api",
+  "name": "gestion-sdk",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -7,11 +7,11 @@
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "puppeteer": "^1.2.0"
-  },
   "devDependencies": {
     "dotenv": "^6.0.0",
     "jest": "^23.1.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
   }
 }
